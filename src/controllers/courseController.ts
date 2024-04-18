@@ -7,6 +7,7 @@ export class CourseController {
     this.interactor = interactor;
   }
   onCreateCourse: any = async (call: any, callback: any) => {
+    console.log(call,"------------------")
     try {
       const request = call.request
       console.log(request,"0000000000000000000000")

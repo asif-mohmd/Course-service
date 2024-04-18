@@ -11,7 +11,7 @@ dotenv.config();
 connectDB()
 
 
-const packageDefinition = protoLoader.loadSync(path.join(__dirname,"/protos/instructor.proto"),
+const packageDefinition = protoLoader.loadSync(path.join(__dirname,"/protos/course.proto"),
     {keepCase: true,
      longs: String,
      enums: String,
@@ -20,7 +20,7 @@ const packageDefinition = protoLoader.loadSync(path.join(__dirname,"/protos/inst
     });
 
 
-const instructorProto = grpc.loadPackageDefinition(packageDefinition)
+const courseProto = grpc.loadPackageDefinition(packageDefinition)
 
 const repository = new CourseRepository()
 const interactor = new CourseInteractor(repository)
@@ -33,15 +33,15 @@ const grpcServer = () =>{
     grpc.ServerCredentials.createInsecure(),
     (err,port)=>{
         if(err){
-            console.log(err,"error happened grpc user service");
+            console.log(err,"error happened grpc course service");
             return
         }
-        console.log("grpc instructor server started on port:",port)
+        console.log("grpc course server started on port:",port)
     }
     )
 }
 
-    server.addService((instructorProto.InstructorService as any).service, {
+    server.addService((courseProto.CourseService as any).service, {
 
         CreateCourse : controller.onCreateCourse.bind(controller),
         
