@@ -1,0 +1,53 @@
+import dotenv from "dotenv";
+import * as grpc from "@grpc/grpc-js"
+import * as protoLoader from "@grpc/proto-loader"
+import path from "path"
+import { CourseController } from "./controllers/courseController";
+import { CourseInteractor } from "./interactor/courseInteractor";
+import { CourseRepository } from "./repository/courseRepository";
+import { connectDB } from "./config/mongodb/db";
+
+dotenv.config();
+connectDB()
+
+
+const packageDefinition = protoLoader.loadSync(path.join(__dirname,"/protos/instructor.proto"),
+    {keepCase: true,
+     longs: String,
+     enums: String,
+     defaults: true,
+     oneofs: true
+    });
+
+
+const instructorProto = grpc.loadPackageDefinition(packageDefinition)
+
+const repository = new CourseRepository()
+const interactor = new CourseInteractor(repository)
+const controller = new CourseController(interactor)
+
+const server = new grpc.Server()
+
+const grpcServer = () =>{
+    server.bindAsync(`0.0.0.0:${process.env.COURSE_GRPC_PORT}`,
+    grpc.ServerCredentials.createInsecure(),
+    (err,port)=>{
+        if(err){
+            console.log(err,"error happened grpc user service");
+            return
+        }
+        console.log("grpc instructor server started on port:",port)
+    }
+    )
+}
+
+    server.addService((instructorProto.InstructorService as any).service, {
+
+        CreateCourse : controller.onCreateCourse.bind(controller),
+        
+        // Implementation of service methods
+    });
+
+grpcServer();
+
+
