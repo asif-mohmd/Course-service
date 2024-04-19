@@ -40,10 +40,6 @@ export class CourseRepository implements ICourseRepository {
         }
     }
 
-
-
-
-
     async CourseDetails(courseId: string): Promise<CourseDetails | any> {
         try {
             const courseDetials = await CourseModel.findOne({ _id: courseId })
