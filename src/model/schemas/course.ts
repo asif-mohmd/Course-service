@@ -14,10 +14,12 @@ export interface ICourse extends Document {
     demoURL: string;
     benefits: Array<string>;
     prerequisites: Array<string>;
+    instructorId:string;
 }
 
 // Define the schema for Course
 const courseSchema: Schema<ICourse> = new mongoose.Schema({
+    instructorId:{ type: String, required: true },
     courseName: { type: String, required: true },
     courseDescription: { type: String, required: true },
     coursePrice: { type: String, required: true },
@@ -27,7 +29,8 @@ const courseSchema: Schema<ICourse> = new mongoose.Schema({
     courseLevel: { type: String, required: true },
     demoURL: { type: String, required: true },
     benefits: { type: [String], required: true },
-    prerequisites: { type: [String], required: true }
+    prerequisites: { type: [String], required: true },
+    
 });
 
 // Create a model using the schema

@@ -7,26 +7,88 @@ export class CourseController {
     this.interactor = interactor;
   }
   onCreateCourse: any = async (call: any, callback: any) => {
-    console.log(call,"------------------")
+
     try {
       const request = call.request
-      console.log(request,"0000000000000000000000")
+      console.log(call.request, "0000000000000000000000")
       const response = await this.interactor.createCourse(request);
-      if (response.registerStatus) {
+      if (response) {
         callback(null, {
-          msg: "OTP send",
-          registerStatus: true,
-          instructorData: response.activationToken,
+          courseStatus: true
         });
       } else {
         callback(null, {
-          msg: "User Already exists",
-          registerStatus: false,
+          courseStatus: false,
         });
       }
     } catch (error) {
       callback(error);
     }
   };
+
+  onListCourse: any = async (call: any, callback: any) => {
+    try {
+
+      const request = call.request
+      console.log(call.request, "0000000000000000000000")
+      const response = await this.interactor.listCourse(request)
+      console.log(response, "==----===----=----")
+      if (response) {
+        callback(null, {
+          courses: response,
+          courseStatus: true
+        })
+      } else {
+        callback(null, {
+          courseStatus: false
+        })
+      }
+    } catch (err) {
+      callback(err)
+    }
+  }
+
+  onGetCourseDetails: any = async (call: any, callback: any) => {
+    try {
+
+      const request = call.request
+      console.log(call.request, "0000000000000000000000")
+      const response = await this.interactor.getCourseDetails(request)
+      console.log("contro",response, "==----===----=----")
+      if (response) {
+        callback(null, {
+          courseDetails: response,
+          courseStatus: true
+        })
+      } else {
+        callback(null, {
+          courseStatus: false
+        })
+      }
+    } catch (err) {
+      callback(err)
+    }
+  }
+
+  onEditCourseDetails: any = async (call: any, callback: any) => {
+    try {
+
+      const request = call.request
+      console.log(call.request, "0000000000000000000000")
+      const response = await this.interactor.editCourseDetails(request)
+      console.log("contro",response, "==----===----=----")
+      if (response) {
+        callback(null, {
+          courseStatus: true
+        })
+      } else {
+        callback(null, {
+          courseStatus: false
+        })
+      }
+    } catch (err) {
+      callback(err)
+    }
+  }
 
 }

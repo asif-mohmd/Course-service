@@ -1,10 +1,10 @@
 {
   "name": "course-service",
   "version": "1.0.0",
-  "main": "dist/server.js",
   "scripts": {
-    "build": "npx tsc && cp -r node_modules dist/",
-    "start": "node dist/server.js",
+    "proto:gen": "./protogen.sh",
+    "build": "npx tsc",
+    "start": "ts-node src/server.ts",
     "dev": "nodemon src/server.ts"
   },
   "author": "",
@@ -13,13 +13,13 @@
   "devDependencies": {
     "@types/express": "^4.17.21",
     "@types/node": "^20.12.7",
+    "nodemon": "^3.1.0",
     "typescript": "^5.4.5"
   },
   "dependencies": {
     "@grpc/grpc-js": "^1.10.6",
     "@grpc/proto-loader": "^0.7.12",
     "@types/dotenv": "^8.2.0",
-    "@types/mongoose": "^5.11.97",
-    "nodemon": "^3.1.0"
+    "@types/mongoose": "^5.11.97"
   }
 }
