@@ -1,10 +1,28 @@
-import { Course, CourseDetails, IEditCourse } from "../entities/Course";
+import { Course, CourseDetails, IEditCourse, LessonsContents } from "../entities/Course";
 import { ICourseRepository } from "../interfaces/ICourseRepository";
 import CourseModel, { ICourse } from "../model/schemas/course";
+import { LessonModel } from "../model/schemas/lesson";
 
 
 export class CourseRepository implements ICourseRepository {
 
+    async lessonsContents(courseId: string, lessonsContents: LessonsContents): Promise<boolean | any> {
+        try {
+            console.log(lessonsContents, "----------------");
+            // Create the lesson document in the database
+            const createdLesson = await LessonModel.create({courseId, jaggedArrayOfArrays: lessonsContents });
+    
+            console.log('Lesson document saved successfully:', createdLesson);
+            return true; // Return true if the document is saved successfully
+        } catch (error) {
+            console.error('Error saving lesson document:', error);
+            return false; // Return false if there's an error
+        }
+    }
+    
+    
+    
+ 
     async editCourse(editCourseData: IEditCourse): Promise<boolean | any> {
         try {
             console.log("editCourseData:", editCourseData);

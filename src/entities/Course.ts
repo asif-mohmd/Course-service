@@ -41,3 +41,16 @@ export interface IEditCourse {
     prerequisites: string[];
 
 }
+
+
+export interface IContent {
+    videoTitle: string;
+    videoURL: string;
+    subtitleURL: string;
+    videoDescription: string;
+    links: any[]; // Adjust the type according to the actual structure of links
+}
+
+export interface LessonsContents {
+    videos: IContent[];
+}

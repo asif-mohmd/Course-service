@@ -1,5 +1,5 @@
 import { ICourseRepository } from "../interfaces/ICourseRepository";
-import { Course, CourseDetails, IEditCourse } from "../entities/Course";
+import { Course, CourseDetails, IEditCourse, LessonsContents } from "../entities/Course";
 import { ICourse } from "../model/schemas/course";
 import { ICourseInteractor } from "../interfaces/ICourseInteractor";
 
@@ -9,6 +9,23 @@ export class CourseInteractor implements ICourseInteractor {
   constructor(repository: ICourseRepository) {
     this.repository = repository;
   }
+  async addLessonsContents(courseId: string, lessonsContents: LessonsContents): Promise<boolean | any> {
+    // console.log(courseId, ";;;;;;", lessonsContents)
+    try {
+
+      const response = await this.repository.lessonsContents(courseId, lessonsContents);
+
+      if (response) {
+        return true
+      } else {
+        return false
+      }
+    } catch { }
+
+
+  }
+
+
   async editCourseDetails(editCourseData: IEditCourse): Promise<boolean | any> {
     try {
       console.log(editCourseData, "iam interactor");
@@ -20,7 +37,7 @@ export class CourseInteractor implements ICourseInteractor {
         return false
       }
     } catch { }
-  
+
   }
   async getCourseDetails({ courseId }: { courseId: string; }): Promise<CourseDetails | any> {
     try {

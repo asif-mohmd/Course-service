@@ -91,4 +91,16 @@ export class CourseController {
     }
   }
 
+  onAddLessonsContent = async (data:any)=>{
+    try{
+      // console.log(data.lessonContents,"herererer")
+      const courseId = data.courseId
+      const lessonContents = data.lessonContents
+      const response = await this.interactor.addLessonsContents(courseId,lessonContents)
+    return true
+    }catch(err){
+
+    }
+  }
+
 }
