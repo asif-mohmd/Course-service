@@ -17,7 +17,7 @@ export default class MessageHandler {
     correlationId: string,
     reply: string
   ){
-    let response = {}
+    let response = data
 
     const {num1,num2} = data
 
@@ -25,7 +25,7 @@ export default class MessageHandler {
 
     switch (operation){
         case "add-lesson-content":
-            let response:boolean| {} | undefined = await controller.onAddLessonsContent.bind(controller)(data);
+            response = await controller.onAddLessonsContent.bind(controller)(data);
             break;
 
             case "sum":

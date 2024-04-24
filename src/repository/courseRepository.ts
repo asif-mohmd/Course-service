@@ -10,10 +10,15 @@ export class CourseRepository implements ICourseRepository {
         try {
             console.log(lessonsContents, "----------------");
             // Create the lesson document in the database
-            const createdLesson = await LessonModel.create({courseId, jaggedArrayOfArrays: lessonsContents });
+            const response = await LessonModel.create({courseId, jaggedArrayOfArrays: lessonsContents });
     
-            console.log('Lesson document saved successfully:', createdLesson);
-            return true; // Return true if the document is saved successfully
+            console.log('Lesson document saved successfully:', response);
+            if(response){
+                return true;
+            }else{
+                return false
+            }
+             // Return true if the document is saved successfully
         } catch (error) {
             console.error('Error saving lesson document:', error);
             return false; // Return false if there's an error

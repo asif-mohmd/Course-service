@@ -96,8 +96,8 @@ export class CourseController {
       // console.log(data.lessonContents,"herererer")
       const courseId = data.courseId
       const lessonContents = data.lessonContents
-      const response = await this.interactor.addLessonsContents(courseId,lessonContents)
-    return true
+      return await this.interactor.addLessonsContents(courseId,lessonContents)
+     
     }catch(err){
 
     }

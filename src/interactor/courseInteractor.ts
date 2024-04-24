@@ -12,16 +12,10 @@ export class CourseInteractor implements ICourseInteractor {
   async addLessonsContents(courseId: string, lessonsContents: LessonsContents): Promise<boolean | any> {
     // console.log(courseId, ";;;;;;", lessonsContents)
     try {
+ 
+      return await this.repository.lessonsContents(courseId, lessonsContents);
 
-      const response = await this.repository.lessonsContents(courseId, lessonsContents);
-
-      if (response) {
-        return true
-      } else {
-        return false
-      }
     } catch { }
-
 
   }
 
