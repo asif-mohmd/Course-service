@@ -6,33 +6,31 @@ export class CourseController {
   constructor(interactor: ICourseInteractor) {
     this.interactor = interactor;
   }
-  onCreateCourse: any = async (call: any, callback: any) => {
+  // onCreateCourse: any = async (call: any, callback: any) => {
 
-    try {
-      const request = call.request
-      console.log(call.request, "0000000000000000000000")
-      const response = await this.interactor.createCourse(request);
-      if (response) {
-        callback(null, {
-          courseStatus: true
-        });
-      } else {
-        callback(null, {
-          courseStatus: false,
-        });
-      }
-    } catch (error) {
-      callback(error);
-    }
-  };
+  //   try {
+  //     const request = call.request
+  //     console.log(call.request, "0000000000000000000000")
+  //     const response = await this.interactor.createCourse(request);
+  //     if (response) {
+  //       callback(null, {
+  //         courseStatus: true
+  //       });
+  //     } else {
+  //       callback(null, {
+  //         courseStatus: false,
+  //       });
+  //     }
+  //   } catch (error) {
+  //     callback(error);
+  //   }
+  // };
 
   onListCourse: any = async (call: any, callback: any) => {
     try {
 
       const request = call.request
-      console.log(call.request, "0000000000000000000000")
       const response = await this.interactor.listCourse(request)
-      console.log(response, "==----===----=----")
       if (response) {
         callback(null, {
           courses: response,
@@ -52,9 +50,7 @@ export class CourseController {
     try {
 
       const request = call.request
-      console.log(call.request, "0000000000000000000000")
       const response = await this.interactor.getCourseDetails(request)
-      console.log("contro",response, "==----===----=----")
       if (response) {
         callback(null, {
           courseDetails: response,
@@ -74,9 +70,7 @@ export class CourseController {
     try {
 
       const request = call.request
-      console.log(call.request, "0000000000000000000000")
       const response = await this.interactor.editCourseDetails(request)
-      console.log("contro",response, "==----===----=----")
       if (response) {
         callback(null, {
           courseStatus: true
@@ -91,16 +85,28 @@ export class CourseController {
     }
   }
 
-  onAddLessonsContent = async (data:any)=>{
+  onCreateCourse = async (data:any)=>{
     try{
       // console.log(data.lessonContents,"herererer")
-      const courseId = data.courseId
+      const courseData = data.courseDetails
+      const instructorId = data.instructorId
       const lessonContents = data.lessonContents
-      return await this.interactor.addLessonsContents(courseId,lessonContents)
+
+      console.log(courseData,"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
+      return await this.interactor.createCourse(instructorId,courseData,lessonContents)
      
     }catch(err){
 
     }
   }
+
+  // onGetLessonsContents = async(data:any)=>{
+  //   try {
+  //     const instructorId = data.instructorId
+  //     return await this.interactor.getLessonsContents(instructorId)
+  //   } catch (error) {
+      
+  //   }
+  // }
 
 }

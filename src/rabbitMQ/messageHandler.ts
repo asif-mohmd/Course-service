@@ -24,13 +24,13 @@ export default class MessageHandler {
     console.log("The operation is ",operation)
 
     switch (operation){
-        case "add-lesson-content":
-            response = await controller.onAddLessonsContent.bind(controller)(data);
+        case "create-course":
+            response = await controller.onCreateCourse.bind(controller)(data);
             break;
 
-            case "sum":
-            response = num1+ num2;
-            break;
+            // case "get-lessons-contents":
+            //     response = await controller.onGetLessonsContents.bind(controller)(data);
+            //     break;
 
             default:
                 response = 0;

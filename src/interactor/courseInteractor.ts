@@ -9,11 +9,11 @@ export class CourseInteractor implements ICourseInteractor {
   constructor(repository: ICourseRepository) {
     this.repository = repository;
   }
-  async addLessonsContents(courseId: string, lessonsContents: LessonsContents): Promise<boolean | any> {
+  async createCourse( instructorId:string,courseData:Course,lessonsContents: LessonsContents): Promise<boolean | any> {
     // console.log(courseId, ";;;;;;", lessonsContents)
     try {
  
-      return await this.repository.lessonsContents(courseId, lessonsContents);
+      return await this.repository.createCourseData(instructorId,courseData, lessonsContents);
 
     } catch { }
 
@@ -63,16 +63,16 @@ export class CourseInteractor implements ICourseInteractor {
     }
   }
 
-  async createCourse(courseData: Course) {
-    try {
-      console.log(courseData, "iam interactor");
-      const response = await this.repository.createCourseData(courseData);
+  // async createCourse(courseData: Course) {
+  //   try {
+  //     console.log(courseData, "iam interactor");
+  //     const response = await this.repository.createCourseData(courseData);
 
-      if (response) {
-        return true
-      } else {
-        return false
-      }
-    } catch { }
-  }
+  //     if (response) {
+  //       return true
+  //     } else {
+  //       return false
+  //     }
+  //   } catch { }
+  // }
 }

@@ -1,5 +1,8 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
+
+// Define the interface for Course document
+
 // Define the subdocument interface
 interface LessonVideo extends Document {
     videoTitle: string;
@@ -19,18 +22,42 @@ const lessonVideoSchema = new Schema<LessonVideo>({
 });
 
 // Define the lesson interface
-interface Lesson extends Document {
+// Define the lesson interface
+interface Course extends Document {
     courseId: string;
-    jaggedArrayOfArrays: LessonVideo[][];
+    instructorId: string;
+    courseName: string;
+    courseDescription: string;
+    coursePrice: string;
+    estimatedPrice: string;
+    courseTags: string;
+    totalVideos: string;
+    courseLevel: string;
+    demoURL: string;
+    benefits: string[];
+    prerequisites: string[];
+    courseLessons: LessonVideo[][];
 }
 
-const lessonSchema = new Schema<Lesson>({
-    courseId: { type: String, required: true },
-    jaggedArrayOfArrays: [[lessonVideoSchema]]
+
+const CourseSchema = new Schema<Course>({
+   
+    instructorId: { type: String, required: true },
+    courseName: { type: String, required: true },
+    courseDescription: { type: String, required: true },
+    coursePrice: { type: String, required: true },
+    estimatedPrice: { type: String, required: true },
+    courseTags: { type: String, required: true },
+    totalVideos: { type: String, required: true },
+    courseLevel: { type: String, required: true },
+    demoURL: { type: String, required: true },
+    benefits: { type: [String], required: true },
+    prerequisites: { type: [String], required: true },
+    courseLessons: [[lessonVideoSchema]]
 });
 
 
 // Define the lesson model
-const LessonModel: Model<Lesson> = mongoose.model('Lesson', lessonSchema);
+const CourseModel: Model<Course> = mongoose.model('Course', CourseSchema);
 
-export { LessonModel, Lesson, LessonVideo };
+export { CourseModel, Course, LessonVideo };

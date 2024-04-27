@@ -1,16 +1,15 @@
 import { Course, CourseDetails, IEditCourse, LessonsContents } from "../entities/Course";
 import { ICourseRepository } from "../interfaces/ICourseRepository";
-import CourseModel, { ICourse } from "../model/schemas/course";
-import { LessonModel } from "../model/schemas/lesson";
+import { CourseModel } from "../model/schemas/lesson";
 
 
 export class CourseRepository implements ICourseRepository {
 
-    async lessonsContents(courseId: string, lessonsContents: LessonsContents): Promise<boolean | any> {
+    async createCourseData(instructorId:string,courseData:Course, lessonsContents: LessonsContents): Promise<boolean | any> {
         try {
-            console.log(lessonsContents, "----------------");
+            console.log(lessonsContents, "----------------",courseData);
             // Create the lesson document in the database
-            const response = await LessonModel.create({courseId, jaggedArrayOfArrays: lessonsContents });
+            const response = await CourseModel.create({...courseData, courseLessons: lessonsContents, instructorId });
     
             console.log('Lesson document saved successfully:', response);
             if(response){
@@ -89,15 +88,15 @@ export class CourseRepository implements ICourseRepository {
 
     }
 
-    async createCourseData(courseData: Course): Promise<any | null> {
-        const isCourseCreated = await CourseModel.create(courseData)
-        console.log("Crated:", isCourseCreated, "-------")
-        if (isCourseCreated) {
-            return true
-        } else {
-            return false
-        }
-    }
+    // async createCourseData(courseData: Course): Promise<any | null> {
+    //     const isCourseCreated = await CourseModel.create(courseData)
+    //     console.log("Crated:", isCourseCreated, "-------")
+    //     if (isCourseCreated) {
+    //         return true
+    //     } else {
+    //         return false
+    //     }
+    // }
 
 
 }
