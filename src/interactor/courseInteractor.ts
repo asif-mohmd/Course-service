@@ -1,6 +1,5 @@
 import { ICourseRepository } from "../interfaces/ICourseRepository";
 import { Course, CourseDetails, IEditCourse, LessonsContents } from "../entities/Course";
-import { ICourse } from "../model/schemas/course";
 import { ICourseInteractor } from "../interfaces/ICourseInteractor";
 
 export class CourseInteractor implements ICourseInteractor {
@@ -33,9 +32,9 @@ export class CourseInteractor implements ICourseInteractor {
     } catch { }
 
   }
-  async getCourseDetails({ courseId }: { courseId: string; }): Promise<CourseDetails | any> {
+  async getCourseDetails(courseId:string): Promise<CourseDetails | any> {
     try {
-      console.log("course detisl interactior")
+      console.log("course detisl interactior",courseId)
       const response = await this.repository.CourseDetails(courseId);
       if (response) {
         return response

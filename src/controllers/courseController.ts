@@ -6,25 +6,7 @@ export class CourseController {
   constructor(interactor: ICourseInteractor) {
     this.interactor = interactor;
   }
-  // onCreateCourse: any = async (call: any, callback: any) => {
 
-  //   try {
-  //     const request = call.request
-  //     console.log(call.request, "0000000000000000000000")
-  //     const response = await this.interactor.createCourse(request);
-  //     if (response) {
-  //       callback(null, {
-  //         courseStatus: true
-  //       });
-  //     } else {
-  //       callback(null, {
-  //         courseStatus: false,
-  //       });
-  //     }
-  //   } catch (error) {
-  //     callback(error);
-  //   }
-  // };
 
   onListCourse: any = async (call: any, callback: any) => {
     try {
@@ -46,25 +28,7 @@ export class CourseController {
     }
   }
 
-  onGetCourseDetails: any = async (call: any, callback: any) => {
-    try {
 
-      const request = call.request
-      const response = await this.interactor.getCourseDetails(request)
-      if (response) {
-        callback(null, {
-          courseDetails: response,
-          courseStatus: true
-        })
-      } else {
-        callback(null, {
-          courseStatus: false
-        })
-      }
-    } catch (err) {
-      callback(err)
-    }
-  }
 
   onEditCourseDetails: any = async (call: any, callback: any) => {
     try {
@@ -99,6 +63,40 @@ export class CourseController {
 
     }
   }
+
+  GetCourseDetails = async (courseId:any)=>{
+    try{
+
+      const response =  await this.interactor.getCourseDetails(courseId)
+     return response
+    }catch(err){
+
+    }
+  }
+
+
+
+  onGetCourseDetails: any = async (call: any, callback: any) => {
+    try {
+
+      const request = call.request
+      const response = await this.interactor.getCourseDetails(request)
+      console.log(response,"controlllll get course")
+      if (response) {
+        callback(null, {
+          courseDetails: response,
+          courseStatus: true
+        })
+      } else {
+        callback(null, {
+          courseStatus: false
+        })
+      }
+    } catch (err) {
+      callback(err)
+    }
+  }
+
 
   // onGetLessonsContents = async(data:any)=>{
   //   try {

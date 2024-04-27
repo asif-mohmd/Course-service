@@ -19,13 +19,15 @@ export default class MessageHandler {
   ){
     let response = data
 
-    const {num1,num2} = data
-
     console.log("The operation is ",operation)
 
     switch (operation){
         case "create-course":
             response = await controller.onCreateCourse.bind(controller)(data);
+            break;
+
+        case "get-course-details":
+            response = await controller.GetCourseDetails.bind(controller)(data);
             break;
 
             // case "get-lessons-contents":

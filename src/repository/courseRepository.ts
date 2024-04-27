@@ -1,17 +1,20 @@
 import { Course, CourseDetails, IEditCourse, LessonsContents } from "../entities/Course";
 import { ICourseRepository } from "../interfaces/ICourseRepository";
-import { CourseModel } from "../model/schemas/lesson";
+import { CourseModel } from "../model/schemas/course";
 
 
 export class CourseRepository implements ICourseRepository {
 
     async createCourseData(instructorId:string,courseData:Course, lessonsContents: LessonsContents): Promise<boolean | any> {
         try {
-            console.log(lessonsContents, "----------------",courseData);
             // Create the lesson document in the database
-            const response = await CourseModel.create({...courseData, courseLessons: lessonsContents, instructorId });
-    
-            console.log('Lesson document saved successfully:', response);
+         let response
+            if(!courseData._id){
+                 response = await CourseModel.create({...courseData, courseLessons: lessonsContents, instructorId });
+            }else{
+       
+                response = await CourseModel.updateOne({ _id: courseData._id }, { ...courseData, courseLessons: lessonsContents, instructorId }) }
+        
             if(response){
                 return true;
             }else{
@@ -64,6 +67,7 @@ export class CourseRepository implements ICourseRepository {
 
     async CourseDetails(courseId: string): Promise<CourseDetails | any> {
         try {
+            console.log(courseId,"------------------")
             const courseDetials = await CourseModel.findOne({ _id: courseId })
             console.log(courseDetials, "repooo db Course details")
             if (courseDetials) {
@@ -79,7 +83,6 @@ export class CourseRepository implements ICourseRepository {
     async listAllCourse(instructorId: string): Promise<any> {
 
         const courseList = await CourseModel.find({ instructorId })
-        console.log(courseList, "iam course lsitttttttt")
         if (courseList) {
             return courseList
         } else {
