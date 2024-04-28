@@ -10,7 +10,6 @@ export class CourseController {
 
   onListCourse: any = async (call: any, callback: any) => {
     try {
-
       const request = call.request
       const response = await this.interactor.listCourse(request)
       if (response) {
@@ -29,47 +28,31 @@ export class CourseController {
   }
 
 
-
-  onEditCourseDetails: any = async (call: any, callback: any) => {
+  onCreateOrEditCourse = async (data: any) => {
     try {
-
-      const request = call.request
-      const response = await this.interactor.editCourseDetails(request)
-      if (response) {
-        callback(null, {
-          courseStatus: true
-        })
-      } else {
-        callback(null, {
-          courseStatus: false
-        })
-      }
-    } catch (err) {
-      callback(err)
-    }
-  }
-
-  onCreateCourse = async (data:any)=>{
-    try{
-      // console.log(data.lessonContents,"herererer")
       const courseData = data.courseDetails
       const instructorId = data.instructorId
       const lessonContents = data.lessonContents
-
-      console.log(courseData,"yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy")
-      return await this.interactor.createCourse(instructorId,courseData,lessonContents)
-     
-    }catch(err){
+      return await this.interactor.createEditCourse(instructorId, courseData, lessonContents)
+    } catch (err) {
 
     }
   }
 
-  GetCourseDetails = async (courseId:any)=>{
-    try{
+  GetCourseDetails = async (courseId: any) => {
+    try {
+      const response = await this.interactor.getCourseDetails(courseId)
+      return response
+    } catch (err) {
 
-      const response =  await this.interactor.getCourseDetails(courseId)
-     return response
-    }catch(err){
+    }
+  }
+
+  onDeleteCourseDetails = async (courseId: any) =>{
+    try {
+      console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
+      return await this.interactor.deleteCourseDetails(courseId)
+    } catch (err) {
 
     }
   }
@@ -78,10 +61,9 @@ export class CourseController {
 
   onGetCourseDetails: any = async (call: any, callback: any) => {
     try {
-
       const request = call.request
       const response = await this.interactor.getCourseDetails(request)
-      console.log(response,"controlllll get course")
+      console.log(response, "controlllll get course")
       if (response) {
         callback(null, {
           courseDetails: response,
@@ -97,14 +79,5 @@ export class CourseController {
     }
   }
 
-
-  // onGetLessonsContents = async(data:any)=>{
-  //   try {
-  //     const instructorId = data.instructorId
-  //     return await this.interactor.getLessonsContents(instructorId)
-  //   } catch (error) {
-      
-  //   }
-  // }
 
 }

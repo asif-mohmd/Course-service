@@ -22,17 +22,17 @@ export default class MessageHandler {
     console.log("The operation is ",operation)
 
     switch (operation){
-        case "create-course":
-            response = await controller.onCreateCourse.bind(controller)(data);
+        case "create-edit-course":
+            response = await controller.onCreateOrEditCourse.bind(controller)(data);
             break;
 
         case "get-course-details":
             response = await controller.GetCourseDetails.bind(controller)(data);
             break;
 
-            // case "get-lessons-contents":
-            //     response = await controller.onGetLessonsContents.bind(controller)(data);
-            //     break;
+        case "delete-course-details":
+             response = await controller.onDeleteCourseDetails.bind(controller)(data);
+             break;
 
             default:
                 response = 0;

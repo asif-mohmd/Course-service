@@ -5,14 +5,33 @@ import { CourseModel } from "../model/schemas/course";
 
 export class CourseRepository implements ICourseRepository {
 
-    async createCourseData(instructorId:string,courseData:Course, lessonsContents: LessonsContents): Promise<boolean | any> {
+
+
+   async deleteCourseDetails(courseId: string): Promise<boolean> {
+    console.log(courseId)
+    try {
+        const response = await CourseModel.deleteOne({ _id:courseId })
+        if (response.deletedCount && response.deletedCount > 0) {
+            console.log("=============== Deleted successfully")
+            return true
+        } else {
+            console.log("=============== No document matched the deletion criteria")
+            return false
+        }
+    } catch (error) {
+        console.error("Error deleting course:", error)
+        return false
+    }
+}
+
+
+    async createEditCourseData(instructorId:string,courseData:Course, lessonsContents: LessonsContents): Promise<boolean | any> {
         try {
             // Create the lesson document in the database
          let response
             if(!courseData._id){
                  response = await CourseModel.create({...courseData, courseLessons: lessonsContents, instructorId });
             }else{
-       
                 response = await CourseModel.updateOne({ _id: courseData._id }, { ...courseData, courseLessons: lessonsContents, instructorId }) }
         
             if(response){
@@ -26,44 +45,7 @@ export class CourseRepository implements ICourseRepository {
             return false; // Return false if there's an error
         }
     }
-    
-    
-    
- 
-    async editCourse(editCourseData: IEditCourse): Promise<boolean | any> {
-        try {
-            console.log("editCourseData:", editCourseData);
 
-            // Assuming CourseModel is your Mongoose model for courses
-            const courseDetails = await CourseModel.updateOne(
-                { _id: editCourseData.courseId }, // filter based on courseId
-                {
-                    $set: { // use $set to update specific fields
-                        courseName: editCourseData.courseName,
-                        courseDescription: editCourseData.courseDescription,
-                        coursePrice: editCourseData.coursePrice,
-                        estimatedPrice: editCourseData.estimatedPrice,
-                        courseTags: editCourseData.courseTags,
-                        totalVideos: editCourseData.totalVideos,
-                        courseLevel: editCourseData.courseLevel,
-                        demoURL: editCourseData.demoURL,
-                        benefits: editCourseData.benefits,
-                        prerequisites: editCourseData.prerequisites
-                    }
-                }
-            );
-            console.log("Updated course details:", courseDetails);
-            // Check if the update operation was successful
-            if (courseDetails.modifiedCount && courseDetails.modifiedCount > 0) {
-                return true; // Successfully updated
-            } else {
-                return false; // No documents matched the filter or no modifications were made
-            }
-        } catch (error) {
-            console.error("Error updating course:", error);
-            throw error; // Throw error for handling in the calling function
-        }
-    }
 
     async CourseDetails(courseId: string): Promise<CourseDetails | any> {
         try {
@@ -103,3 +85,4 @@ export class CourseRepository implements ICourseRepository {
 
 
 }
+ 

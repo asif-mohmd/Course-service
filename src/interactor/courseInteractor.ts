@@ -8,33 +8,20 @@ export class CourseInteractor implements ICourseInteractor {
   constructor(repository: ICourseRepository) {
     this.repository = repository;
   }
-  async createCourse( instructorId:string,courseData:Course,lessonsContents: LessonsContents): Promise<boolean | any> {
-    // console.log(courseId, ";;;;;;", lessonsContents)
+  async deleteCourseDetails(courseId: string): Promise<boolean | CourseDetails> {
+     return await this.repository.deleteCourseDetails(courseId)
+  }
+  async createEditCourse(instructorId: string, courseData: Course, lessonsContents: LessonsContents): Promise<boolean | any> {
     try {
- 
-      return await this.repository.createCourseData(instructorId,courseData, lessonsContents);
-
+      return await this.repository.createEditCourseData(instructorId, courseData, lessonsContents);
     } catch { }
 
   }
 
 
-  async editCourseDetails(editCourseData: IEditCourse): Promise<boolean | any> {
-    try {
-      console.log(editCourseData, "iam interactor");
-      const response = await this.repository.editCourse(editCourseData);
 
-      if (response) {
-        return true
-      } else {
-        return false
-      }
-    } catch { }
-
-  }
-  async getCourseDetails(courseId:string): Promise<CourseDetails | any> {
+  async getCourseDetails(courseId: string): Promise<CourseDetails | any> {
     try {
-      console.log("course detisl interactior",courseId)
       const response = await this.repository.CourseDetails(courseId);
       if (response) {
         return response
@@ -56,22 +43,9 @@ export class CourseInteractor implements ICourseInteractor {
         return false
       }
     } catch (error) {
-      // Handle errors appropriately, either by logging or throwing them
       console.error("Error in listCourse method:", error);
       throw error; // Rethrow the error for the caller to handle it
     }
   }
 
-  // async createCourse(courseData: Course) {
-  //   try {
-  //     console.log(courseData, "iam interactor");
-  //     const response = await this.repository.createCourseData(courseData);
-
-  //     if (response) {
-  //       return true
-  //     } else {
-  //       return false
-  //     }
-  //   } catch { }
-  // }
 }

@@ -51,7 +51,6 @@ const grpcServer = () =>{
         // CreateCourse : controller.onCreateCourse.bind(controller),
         ListCourse : controller.onListCourse.bind(controller),
         // GetCourseDetails : controller.onGetCourseDetails.bind(controller),
-        EditCourseDetails : controller.onEditCourseDetails.bind(controller),
         // AddLessonContent : controller.onAddLessonsContent.bind(controller)
         
         // Implementation of service methods
