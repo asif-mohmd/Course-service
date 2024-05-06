@@ -12,10 +12,10 @@ export class CourseRepository implements ICourseRepository {
     try {
         const response = await CourseModel.deleteOne({ _id:courseId })
         if (response.deletedCount && response.deletedCount > 0) {
-            console.log("=============== Deleted successfully")
+            console.log("=========== Deleted successfully")
             return true
         } else {
-            console.log("=============== No document matched the deletion criteria")
+            console.log("============ No document matched the deletion criteria")
             return false
         }
     } catch (error) {
