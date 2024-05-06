@@ -73,15 +73,6 @@ export class CourseRepository implements ICourseRepository {
 
     }
 
-    // async createCourseData(courseData: Course): Promise<any | null> {
-    //     const isCourseCreated = await CourseModel.create(courseData)
-    //     console.log("Crated:", isCourseCreated, "-------")
-    //     if (isCourseCreated) {
-    //         return true
-    //     } else {
-    //         return false
-    //     }
-    // }
 
 
 }
