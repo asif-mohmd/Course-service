@@ -48,7 +48,6 @@ const grpcServer = () =>{
 
     server.addService((courseProto.CourseService as any).service, {
 
-        // CreateCourse : controller.onCreateCourse.bind(controller),
         ListCourse : controller.onListCourse.bind(controller),
         // GetCourseDetails : controller.onGetCourseDetails.bind(controller),
         // AddLessonContent : controller.onAddLessonsContent.bind(controller)
