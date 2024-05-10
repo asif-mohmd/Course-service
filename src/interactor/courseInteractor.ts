@@ -33,6 +33,23 @@ export class CourseInteractor implements ICourseInteractor {
     }
   }
 
+  async getAllUserCourses(): Promise<CourseDetails | any> {
+    try {
+      const response = await this.repository.GetAllUserCourses();
+      if (response) {
+        return response
+      } else {
+        return false
+      }
+    } catch (error) {
+
+    }
+  }
+
+
+
+
+
   async listCourse({ instructorId }: { instructorId: string }): Promise<any> {
     try {
       console.log("I am inside listCourse method of CourseInteractor");

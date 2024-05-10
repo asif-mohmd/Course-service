@@ -6,4 +6,5 @@ export interface ICourseInteractor {
     getCourseDetails(courseId:string): Promise<CourseDetails | boolean>;
     createEditCourse(instructorId:string,courseData: Course,lessonsContents:LessonsContents):Promise<boolean>
     deleteCourseDetails(courseId:string): Promise<CourseDetails | boolean>;
+    getAllUserCourses(): Promise<CourseDetails | boolean>;
 }

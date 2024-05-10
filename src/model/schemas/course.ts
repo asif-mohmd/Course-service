@@ -26,11 +26,12 @@ const lessonVideoSchema = new Schema<LessonVideo>({
 interface Course extends Document {
     courseId: string;
     instructorId: string;
+    thumbnail: string
     courseName: string;
     courseDescription: string;
     coursePrice: string;
     estimatedPrice: string;
-    courseTags: string;
+    courseCategory: string;
     totalVideos: string;
     courseLevel: string;
     demoURL: string;
@@ -43,11 +44,12 @@ interface Course extends Document {
 const CourseSchema = new Schema<Course>({
    
     instructorId: { type: String, required: true },
+    thumbnail: { type: String, required: true },
     courseName: { type: String, required: true },
     courseDescription: { type: String, required: true },
     coursePrice: { type: String, required: true },
     estimatedPrice: { type: String, required: true },
-    courseTags: { type: String, required: true },
+    courseCategory: { type: String, required: true },
     totalVideos: { type: String, required: true },
     courseLevel: { type: String, required: true },
     demoURL: { type: String, required: true },

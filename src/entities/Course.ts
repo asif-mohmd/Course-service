@@ -1,10 +1,11 @@
 export interface Course {
     _id:string;
+    thumbnail: string
     courseName: string;
     courseDescription: string;
     coursePrice: string;
     estimatedPrice: string;
-    courseTags: string;
+    courseCategory: string;
     totalVideos: string;
     courseLevel: string;
     demoURL: string;
@@ -15,12 +16,13 @@ export interface Course {
 
 export interface CourseDetails {
     id: string;
+    thumbnail: string
     instructorId: string;
     courseName: string;
     courseDescription: string;
     coursePrice: string;
     estimatedPrice: string;
-    courseTags: string;
+    courseCategory: string;
     totalVideos: string;
     courseLevel: string;
     demoURL: string;
@@ -30,11 +32,12 @@ export interface CourseDetails {
 
 export interface IEditCourse {
     courseId: string;
+    thumbnail: string
     courseName: string;
     courseDescription: string;
     coursePrice: string;
     estimatedPrice: string;
-    courseTags: string;
+    courseCategory: string;
     totalVideos: string;
     courseLevel: string;
     demoURL: string;

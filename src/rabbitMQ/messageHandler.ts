@@ -34,6 +34,10 @@ export default class MessageHandler {
              response = await controller.onDeleteCourseDetails.bind(controller)(data);
              break;
 
+        case "get-all-user-courses":
+            response = await controller.onGetAllUserCourses.bind(controller)();
+             break;
+
             default:
                 response = 0;
                 break

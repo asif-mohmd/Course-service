@@ -13,6 +13,7 @@ export class CourseController {
       const request = call.request
       const response = await this.interactor.listCourse(request)
       if (response) {
+        console.log(response,"kkkkkkkkooooooooooooooookkk")
         callback(null, {
           courses: response,
           courseStatus: true
@@ -33,6 +34,9 @@ export class CourseController {
       const courseData = data.courseDetails
       const instructorId = data.instructorId
       const lessonContents = data.lessonContents
+      
+
+     console.log(courseData,"--------------------")
       return await this.interactor.createEditCourse(instructorId, courseData, lessonContents)
     } catch (err) {
 
@@ -52,6 +56,16 @@ export class CourseController {
     try {
       console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
       return await this.interactor.deleteCourseDetails(courseId)
+    } catch (err) {
+
+    }
+  }
+
+  onGetAllUserCourses = async () =>{
+    console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
+
+    try {
+      return await this.interactor.getAllUserCourses()
     } catch (err) {
 
     }

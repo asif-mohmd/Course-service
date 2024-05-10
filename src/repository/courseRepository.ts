@@ -62,6 +62,23 @@ export class CourseRepository implements ICourseRepository {
         }
     }
 
+    async GetAllUserCourses(): Promise<CourseDetails | any> {
+        try {
+            const courseDetials = await CourseModel.find()
+            console.log(courseDetials, "repooo db Course details")
+            if (courseDetials) {
+                return courseDetials
+            } else {
+                return false
+            }
+        } catch (error) {
+
+        }
+    }
+
+
+
+
     async listAllCourse(instructorId: string): Promise<any> {
 
         const courseList = await CourseModel.find({ instructorId })
