@@ -6,5 +6,7 @@ export interface ICourseRepository {
     CourseDetails(courseId:string): Promise<CourseDetails>;
     createEditCourseData(instructorId:string,courseData:Course,lessonsContents:LessonsContents):Promise<boolean>
     deleteCourseDetails(courseId:string): Promise<CourseDetails | boolean>;
+    GetAllUserCourses(): Promise<CourseDetails | boolean>;
+
 
 }
