@@ -28,11 +28,14 @@ export class CourseRepository implements ICourseRepository {
     async createEditCourseData(instructorId:string,courseData:Course, lessonsContents: LessonsContents): Promise<boolean | any> {
         try {
             // Create the lesson document in the database
+            console.log("============================",courseData,"==============================================")
          let response
             if(!courseData._id){
-                 response = await CourseModel.create({...courseData, courseLessons: lessonsContents, instructorId });
+                console.log("creaeteeeeeeee")
+                 response = await CourseModel.create({...courseData, instructorId });
             }else{
-                response = await CourseModel.updateOne({ _id: courseData._id }, { ...courseData, courseLessons: lessonsContents, instructorId }) }
+                console.log("editttttt",courseData.lessons)
+                response = await CourseModel.updateOne({ _id: courseData._id }, { ...courseData, instructorId }) }
         
             if(response){
                 return true;
@@ -49,7 +52,6 @@ export class CourseRepository implements ICourseRepository {
 
     async CourseDetails(courseId: string): Promise<CourseDetails | any> {
         try {
-            console.log(courseId,"------------------")
             const courseDetials = await CourseModel.findOne({ _id: courseId })
             console.log(courseDetials, "repooo db Course details")
             if (courseDetials) {

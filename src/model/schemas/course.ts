@@ -37,7 +37,7 @@ interface Course extends Document {
     demoURL: string;
     benefits: string[];
     prerequisites: string[];
-    courseLessons: LessonVideo[][];
+    lessons: LessonVideo[][];
 }
 
 
@@ -55,7 +55,7 @@ const CourseSchema = new Schema<Course>({
     demoURL: { type: String, required: true },
     benefits: { type: [String], required: true },
     prerequisites: { type: [String], required: true },
-    courseLessons: [[lessonVideoSchema]]
+    lessons: [[lessonVideoSchema]]
 });
 
 
