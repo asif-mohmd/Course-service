@@ -12,8 +12,16 @@ export interface Course {
     benefits: Array<string>;
     prerequisites: Array<string>;
     instructorId:string;
+    lessons: LessonVideo[][];
 }
 
+interface LessonVideo  {
+    videoTitle: string;
+    videoURL: string;
+    subtitleURL: string;
+    videoDescription: string;
+    links: string[];
+}
 export interface CourseDetails {
     id: string;
     thumbnail: string
