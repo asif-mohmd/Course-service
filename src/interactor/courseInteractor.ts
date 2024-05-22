@@ -1,5 +1,5 @@
 import { ICourseRepository } from "../interfaces/ICourseRepository";
-import { Course, CourseDetails, IEditCourse, LessonsContents } from "../entities/Course";
+import { Course, CourseDetails, IEditCourse, LessonsContents, PurchasedCourseDetails } from "../entities/Course";
 import { ICourseInteractor } from "../interfaces/ICourseInteractor";
 
 export class CourseInteractor implements ICourseInteractor {
@@ -8,6 +8,11 @@ export class CourseInteractor implements ICourseInteractor {
   constructor(repository: ICourseRepository) {
     this.repository = repository;
   }
+  async getAllUserPurchasedCourses(userCourses:string[]): Promise<boolean | PurchasedCourseDetails> {
+    return await this.repository.getAllUserPurchasedCourses(userCourses)
+  }
+
+
   async deleteCourseDetails(courseId: string): Promise<boolean | CourseDetails> {
      return await this.repository.deleteCourseDetails(courseId)
   }
@@ -63,6 +68,10 @@ export class CourseInteractor implements ICourseInteractor {
       console.error("Error in listCourse method:", error);
       throw error; // Rethrow the error for the caller to handle it
     }
+  }
+
+  addQuestion(data: any): Promise<Object | null> {
+    return this.repository.addQuestion(data);
   }
 
 }

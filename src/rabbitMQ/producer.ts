@@ -5,7 +5,7 @@ export default class Producer {
 
     async produceMessages(data: any, correlationId:string, replyToQueue: string) {
 
-        console.log("Responsing with..",data)
+        console.log("Responsing with..")
         this.channel.sendToQueue(replyToQueue, Buffer.from(JSON.stringify(data)), {
             correlationId:correlationId
         })

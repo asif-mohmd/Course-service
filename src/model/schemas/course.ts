@@ -1,7 +1,11 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
 
-// Define the interface for Course document
+interface Comment {
+    user: object;
+    question: string;
+    questionReplies: object[];
+}
 
 // Define the subdocument interface
 interface LessonVideo extends Document {
@@ -10,6 +14,7 @@ interface LessonVideo extends Document {
     subtitleURL: string;
     videoDescription: string;
     links: string[];
+    questions: Comment[];
 }
 
 // Define the subdocument schema
@@ -18,7 +23,8 @@ const lessonVideoSchema = new Schema<LessonVideo>({
     videoURL: { type: String, required: true },
     subtitleURL: { type: String, required: true },
     videoDescription: { type: String, required: true },
-    links: [{ type: String, required: true }]
+    links: [{ type: String, required: true }],
+    questions: [{ type: Object }]
 });
 
 // Define the lesson interface

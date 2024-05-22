@@ -66,3 +66,11 @@ export interface IContent {
 export interface LessonsContents {
     videos: IContent[];
 }
+
+
+export interface PurchasedCourseDetails {
+    id: string;
+    name: string; 
+    description: string;
+    thumbnail: string;
+}

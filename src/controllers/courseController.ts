@@ -67,13 +67,23 @@ export class CourseController {
     }
   }
 
+  onGetAllUserPurchasedCourses = async (data:string[]) =>{
+    console.log("------00000000000000000000000")
+    console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",data)
+
+    try {
+      return await this.interactor.getAllUserPurchasedCourses(data)
+    } catch (err) {
+
+    }
+  }
+
 
 
   onGetCourseDetails: any = async (call: any, callback: any) => {
     try {
       const request = call.request
       const response = await this.interactor.getCourseDetails(request)
-      console.log(response, "controlllll get course")
       if (response) {
         callback(null, {
           courseDetails: response,
@@ -88,6 +98,15 @@ export class CourseController {
       callback(err)
     }
   }
+
+  addQuestion = async (data: any) => {
+    try {
+      console.log("add quee",data)
+      return this.interactor.addQuestion(data);
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
 
 
 }

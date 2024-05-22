@@ -1,9 +1,22 @@
-import { Course, CourseDetails, IEditCourse, LessonsContents } from "../entities/Course";
+import { Course, CourseDetails, IEditCourse, LessonsContents, PurchasedCourseDetails } from "../entities/Course";
 import { ICourseRepository } from "../interfaces/ICourseRepository";
-import { CourseModel } from "../model/schemas/course";
+import { CourseModel, LessonVideo } from "../model/schemas/course";
 
 
 export class CourseRepository implements ICourseRepository {
+   async getAllUserPurchasedCourses(userCourses:string[]): Promise<any | PurchasedCourseDetails> {
+    try {
+        console.log("kkkkkkk",userCourses)
+        const courses = await CourseModel.find({
+            _id: { $in: userCourses }
+        });
+        console.log(courses)
+        return courses;
+    } catch (error) {
+        console.error('Error fetching courses:', error);
+        throw error;
+    }
+    }
 
 
 
@@ -28,13 +41,10 @@ export class CourseRepository implements ICourseRepository {
     async createEditCourseData(instructorId:string,courseData:Course, lessonsContents: LessonsContents): Promise<boolean | any> {
         try {
             // Create the lesson document in the database
-            console.log("============================",courseData,"==============================================")
          let response
             if(!courseData._id){
-                console.log("creaeteeeeeeee")
                  response = await CourseModel.create({...courseData, instructorId });
             }else{
-                console.log("editttttt",courseData.lessons)
                 response = await CourseModel.updateOne({ _id: courseData._id }, { ...courseData, instructorId }) }
         
             if(response){
@@ -53,7 +63,6 @@ export class CourseRepository implements ICourseRepository {
     async CourseDetails(courseId: string): Promise<CourseDetails | any> {
         try {
             const courseDetials = await CourseModel.findOne({ _id: courseId })
-            console.log(courseDetials, "repooo db Course details")
             if (courseDetials) {
                 return courseDetials
             } else {
@@ -67,7 +76,6 @@ export class CourseRepository implements ICourseRepository {
     async GetAllUserCourses(): Promise<CourseDetails | any> {
         try {
             const courseDetials = await CourseModel.find()
-            console.log(courseDetials, "repooo db Course details")
             if (courseDetials) {
                 return courseDetials
             } else {
@@ -90,6 +98,39 @@ export class CourseRepository implements ICourseRepository {
             return false
         }
 
+    }
+
+    async  addQuestion(data: any): Promise<Object | null> {
+        try {
+            console.log("ooooooooreeeeeeeeeeeepppppp",data)
+            const course = await CourseModel.findById(data.courseId);
+            if (!course) {
+                return null;
+            }
+    console.log(course,"cors reporrr")
+            // Flatten the lessons array and find the content by ID
+            let courseContent: LessonVideo | undefined;
+            for (const lessonArray of course.lessons) {
+                courseContent = lessonArray.find((item) =>
+                    item._id.equals(data.videoId)
+                );
+                if (courseContent) break;
+            }
+    console.log(courseContent,"contentt")
+            if (!courseContent) {
+                return null;
+            }
+    
+            // Add the question to the questions array
+            courseContent.questions.push(data.newQuestion);
+            console.log(courseContent,"newwww")
+            await course.save();
+            return { success: true };
+        } catch (e: any) {
+            // Handle the error appropriately
+            console.error("Error adding question:", e);
+            return { success: false, error: e.message };
+        }
     }
 
 
