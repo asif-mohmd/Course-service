@@ -9,4 +9,5 @@ export interface ICourseInteractor {
     getAllUserCourses(): Promise<CourseDetails | boolean>;
     getAllUserPurchasedCourses(userCourses:string[]):Promise<PurchasedCourseDetails | boolean>;
     addQuestion(data: any): unknown;
+    addAnswer(data: any): Promise<Object | null>;
 }

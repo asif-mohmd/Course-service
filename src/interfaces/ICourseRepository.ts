@@ -9,6 +9,7 @@ export interface ICourseRepository {
     GetAllUserCourses(): Promise<CourseDetails | any>;
     getAllUserPurchasedCourses(userCourses:string[]):Promise<PurchasedCourseDetails | any>;
     addQuestion(data: any): Promise<Object | null>;
+    addAnswer(data: any): Promise<Object | null>;
 
 
 

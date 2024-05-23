@@ -108,5 +108,15 @@ export class CourseController {
     }
   };
 
+  addAnswer = async (data: any) => {
+    try {
+      return this.interactor.addAnswer(data);
+    } catch (e: any) {
+      console.log(e);
+    }
+  };
+
+
+
 
 }

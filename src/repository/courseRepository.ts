@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Course, CourseDetails, IEditCourse, LessonsContents, PurchasedCourseDetails } from "../entities/Course";
 import { ICourseRepository } from "../interfaces/ICourseRepository";
 import { CourseModel, LessonVideo } from "../model/schemas/course";
@@ -102,12 +103,13 @@ export class CourseRepository implements ICourseRepository {
 
     async  addQuestion(data: any): Promise<Object | null> {
         try {
-            console.log("ooooooooreeeeeeeeeeeepppppp",data)
+            console.log("ooooooooreeeeeeeeeeeepppppp", data);
             const course = await CourseModel.findById(data.courseId);
             if (!course) {
                 return null;
             }
-    console.log(course,"cors reporrr")
+            console.log(course, "cors reporrr");
+    
             // Flatten the lessons array and find the content by ID
             let courseContent: LessonVideo | undefined;
             for (const lessonArray of course.lessons) {
@@ -116,19 +118,70 @@ export class CourseRepository implements ICourseRepository {
                 );
                 if (courseContent) break;
             }
-    console.log(courseContent,"contentt")
+            console.log(courseContent, "contentt");
             if (!courseContent) {
                 return null;
             }
     
-            // Add the question to the questions array
-            courseContent.questions.push(data.newQuestion);
-            console.log(courseContent,"newwww")
+            // Add the question to the questions array with an ObjectId and timestamps
+            const newQuestion = {
+                ...data.newQuestion,
+                _id: new mongoose.Types.ObjectId(),
+                createdAt: new Date(),
+                updatedAt: new Date()
+            };
+            courseContent.questions.push(newQuestion);
+            console.log(courseContent, "newwww");
             await course.save();
             return { success: true };
         } catch (e: any) {
             // Handle the error appropriately
             console.error("Error adding question:", e);
+            return { success: false, error: e.message };
+        }
+    }
+
+    async  addAnswer(data: any): Promise<Object | null> {
+        try {
+            console.log("dummy answer", data);
+            const course = await CourseModel.findById(data.courseId);
+            if (!course) {
+                return null;
+            }
+            console.log(course, "course report");
+    
+            // Flatten the lessons array and find the content by ID
+            let courseContent: LessonVideo | undefined;
+            for (const lessonArray of course.lessons) {
+                courseContent = lessonArray.find((item) =>
+                    item._id.equals(data.videoId)
+                );
+                if (courseContent) break;
+            }
+            console.log(courseContent, "content");
+    
+            if (!courseContent) {
+                return null;
+            }
+    
+            // Find the specific question by ID
+            const question = courseContent.questions.find((q) =>
+                q._id.equals(data.questionId)
+            );
+            console.log(question, "question");
+    
+            if (!question) {
+                return null;
+            }
+    
+            // Push the answer to the questionReplies array
+            question.questionReplies.push(data.answerList);
+            console.log(question, "updated question");
+    
+            await course.save();
+            return { success: true };
+        } catch (e: any) {
+            console.log(e);
             return { success: false, error: e.message };
         }
     }

@@ -44,6 +44,9 @@ export default class MessageHandler {
         case "add-question":
           response = await controller.addQuestion.bind(controller)(data);
              break;
+      case "add-answer":
+          response = await controller.addAnswer.bind(controller)(data);
+           break;
       
             default:
                 response = 0;

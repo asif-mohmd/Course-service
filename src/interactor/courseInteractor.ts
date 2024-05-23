@@ -74,4 +74,9 @@ export class CourseInteractor implements ICourseInteractor {
     return this.repository.addQuestion(data);
   }
 
+  addAnswer(data: any): Promise<Object | null> {
+    return this.repository.addAnswer(data);
+  }
+
+
 }
