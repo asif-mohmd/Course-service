@@ -50,7 +50,6 @@ export class CourseController {
 
   onDeleteCourseDetails = async (courseId: any) =>{
     try {
-      console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
       return await this.interactor.deleteCourseDetails(courseId)
     } catch (err) {
 
@@ -58,8 +57,6 @@ export class CourseController {
   }
 
   onGetAllUserCourses = async () =>{
-    console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;")
-
     try {
       return await this.interactor.getAllUserCourses()
     } catch (err) {
@@ -68,8 +65,6 @@ export class CourseController {
   }
 
   onGetAllUserPurchasedCourses = async (data:string[]) =>{
-    console.log("------00000000000000000000000")
-    console.log(";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;",data)
 
     try {
       return await this.interactor.getAllUserPurchasedCourses(data)
@@ -101,7 +96,6 @@ export class CourseController {
 
   addQuestion = async (data: any) => {
     try {
-      console.log("add quee",data)
       return this.interactor.addQuestion(data);
     } catch (e: any) {
       console.log(e);

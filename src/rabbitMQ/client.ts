@@ -38,12 +38,9 @@ class RabbitMQClient {
 
 
             this.producer = new Producer(this.producerChannel);
-            console.log("00000000")
             this.consumer = new Consumer(this.consumerChannel, courseQueue)
-            console.log("00000000")
 
             this.consumer.consumeMesssages()
-            console.log("00000000")
 
             this.isInitialized= true
         }catch(error){
