@@ -33,17 +33,14 @@ class RabbitMQClient {
 
             this.consumerChannel = await this.connection.createChannel()
 
-            const {queue:rpcQueue} = await this.consumerChannel.assertQueue(
-                config.rabbitMQ.queues.rpcQueue,{exclusive:true})
+            const {queue:courseQueue} = await this.consumerChannel.assertQueue(
+                config.rabbitMQ.queues.courseQueue,{exclusive:true})
 
 
             this.producer = new Producer(this.producerChannel);
-            console.log("00000000")
-            this.consumer = new Consumer(this.consumerChannel, rpcQueue)
-            console.log("00000000")
+            this.consumer = new Consumer(this.consumerChannel, courseQueue)
 
             this.consumer.consumeMesssages()
-            console.log("00000000")
 
             this.isInitialized= true
         }catch(error){

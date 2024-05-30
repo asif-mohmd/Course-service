@@ -38,9 +38,19 @@ export default class MessageHandler {
             response = await controller.onGetAllUserCourses.bind(controller)();
              break;
 
+        case "get-user-purchased-courses":
+          response = await controller.onGetAllUserPurchasedCourses.bind(controller)(data);
+             break;
+        case "add-question":
+          response = await controller.addQuestion.bind(controller)(data);
+             break;
+      case "add-answer":
+          response = await controller.addAnswer.bind(controller)(data);
+           break;
+      
             default:
                 response = 0;
-                break
+                break;
     }
 
     await rabbitClient.produce(response,correlationId,reply)

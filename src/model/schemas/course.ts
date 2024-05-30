@@ -1,32 +1,46 @@
 import mongoose, { Document, Schema, Model } from 'mongoose';
 
+// Define the subdocument interface for Comment
+interface Comment extends Document {
+    user: object;
+    question: string;
+    questionReplies: object[];
+    createdAt: Date;
+    updatedAt: Date;
+}
 
-// Define the interface for Course document
+// Define the schema for Comment with timestamps
+const commentSchema = new Schema<Comment>({
+    user: { type: Object, required: true },
+    question: { type: String, required: true },
+    questionReplies: [{ type: Object, required: true }]
+}, { timestamps: true });
 
-// Define the subdocument interface
+// Define the subdocument interface for LessonVideo
 interface LessonVideo extends Document {
     videoTitle: string;
     videoURL: string;
     subtitleURL: string;
     videoDescription: string;
     links: string[];
+    questions: Comment[];
 }
 
-// Define the subdocument schema
+// Define the subdocument schema for LessonVideo
 const lessonVideoSchema = new Schema<LessonVideo>({
     videoTitle: { type: String, required: true },
     videoURL: { type: String, required: true },
     subtitleURL: { type: String, required: true },
     videoDescription: { type: String, required: true },
-    links: [{ type: String, required: true }]
+    links: [{ type: String, required: true }],
+    questions: [commentSchema]
 });
 
-// Define the lesson interface
-// Define the lesson interface
+// Define the main document interface for Course
 interface Course extends Document {
     courseId: string;
     instructorId: string;
-    thumbnail: string
+    thumbnail: string;
     courseName: string;
     courseDescription: string;
     coursePrice: string;
@@ -40,9 +54,8 @@ interface Course extends Document {
     lessons: LessonVideo[][];
 }
 
-
+// Define the main document schema for Course
 const CourseSchema = new Schema<Course>({
-   
     instructorId: { type: String, required: true },
     thumbnail: { type: String, required: true },
     courseName: { type: String, required: true },
@@ -58,8 +71,7 @@ const CourseSchema = new Schema<Course>({
     lessons: [[lessonVideoSchema]]
 });
 
-
 // Define the lesson model
 const CourseModel: Model<Course> = mongoose.model('Course', CourseSchema);
 
-export { CourseModel, Course, LessonVideo };
+export { CourseModel, Course, LessonVideo, Comment };
