@@ -98,78 +98,82 @@ export class CourseRepository implements ICourseRepository {
     }
   }
 
-  async addQuestion(data: any): Promise<Object | null> {
+  async  addQuestion(data: any): Promise<Object | null> {
     try {
-      const course = await CourseModel.findById(data.courseId);
-      if (!course) {
-        return null;
-      }
+        const course = await CourseModel.findById(data.courseId);
+        if (!course) {
+            return null;
+        }
 
-      // Flatten the lessons array and find the content by ID
-      let courseContent: LessonVideo | undefined;
-      for (const lessonArray of course.lessons) {
-        courseContent = lessonArray.find((item) =>
-          item._id.equals(data.videoId)
-        );
-        if (courseContent) break;
-      }
-      if (!courseContent) {
-        return null;
-      }
+        // Flatten the lessons array and find the content by ID
+        let courseContent: LessonVideo | undefined;
+        for (const lessonArray of course.lessons) {
+            courseContent = (lessonArray as LessonVideo[]).find((item: LessonVideo) =>
+                item._id.equals(data.videoId)
+            );
+            if (courseContent) break;
+        }
 
-      // Add the question to the questions array with an ObjectId and timestamps
-      const newQuestion = {
-        ...data.newQuestion,
-        _id: new mongoose.Types.ObjectId(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-      courseContent.questions.push(newQuestion);
-      await course.save();
-      return { success: true };
+        if (!courseContent) {
+            return null;
+        }
+
+        // Add the question to the questions array with an ObjectId and timestamps
+        const newQuestion = {
+            ...data.newQuestion,
+            _id: new mongoose.Types.ObjectId(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
+        };
+        courseContent.questions.push(newQuestion);
+        await course.save();
+        return { success: true };
     } catch (e: any) {
-      // Handle the error appropriately
-      console.error("Error adding question:", e);
-      return { success: false, error: e.message };
+        // Handle the error appropriately
+        console.error("Error adding question:", e);
+        return { success: false, error: e.message };
     }
-  }
+}
 
-  async addAnswer(data: any): Promise<Object | null> {
+async  addAnswer(data: any): Promise<Object | null> {
     try {
-      const course = await CourseModel.findById(data.courseId);
-      if (!course) {
-        return null;
-      }
+        const course = await CourseModel.findById(data.courseId);
+        if (!course) {
+            return null;
+        }
 
-      // Flatten the lessons array and find the content by ID
-      let courseContent: LessonVideo | undefined;
-      for (const lessonArray of course.lessons) {
-        courseContent = lessonArray.find((item) =>
-          item._id.equals(data.videoId)
+        // Flatten the lessons array and find the content by ID
+        let courseContent: LessonVideo | undefined;
+        for (const lessonArray of course.lessons) {
+            courseContent = (lessonArray as LessonVideo[]).find((item: LessonVideo) =>
+                item._id.equals(data.videoId)
+            );
+            if (courseContent) break;
+        }
+
+        if (!courseContent) {
+            return null;
+        }
+
+        // Find the specific question by ID
+        const question = courseContent.questions.find((q: any) =>
+            q._id.equals(data.questionId)
         );
-        if (courseContent) break;
-      }
 
-      if (!courseContent) {
-        return null;
-      }
+        if (!question) {
+            return null;
+        }
 
-      // Find the specific question by ID
-      const question = courseContent.questions.find((q) =>
-        q._id.equals(data.questionId)
-      );
+        // Push the answer to the questionReplies array
+        question.questionReplies.push(data.answerList);
 
-      if (!question) {
-        return null;
-      }
-
-      // Push the answer to the questionReplies array
-      question.questionReplies.push(data.answerList);
-
-      await course.save();
-      return { success: true };
+        await course.save();
+        return { success: true };
     } catch (e: any) {
-      return { success: false, error: e.message };
+        console.error("Error adding answer:", e);
+        return { success: false, error: e.message };
     }
-  }
+}
+
+
 }
