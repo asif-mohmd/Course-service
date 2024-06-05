@@ -8,6 +8,6 @@ export interface ICourseInteractor {
     deleteCourseDetails(courseId:string): Promise<CourseDetails | boolean>;
     getAllUserCourses(): Promise<CourseDetails | boolean>;
     getAllUserPurchasedCourses(userCourses:string[]):Promise<PurchasedCourseDetails | boolean>;
-    addQuestion(data: any): unknown;
+    addQuestion(data: any): any;
     addAnswer(data: any): Promise<Object | null>;
 }

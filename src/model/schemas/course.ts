@@ -18,6 +18,7 @@ const commentSchema = new Schema<Comment>({
 
 // Define the subdocument interface for LessonVideo
 interface LessonVideo extends Document {
+    _id: mongoose.Types.ObjectId;  // Ensure _id is typed properly
     videoTitle: string;
     videoURL: string;
     subtitleURL: string;
@@ -51,7 +52,7 @@ interface Course extends Document {
     demoURL: string;
     benefits: string[];
     prerequisites: string[];
-    lessons: LessonVideo[][];
+    lessons: LessonVideo[][];  // Ensure lessons is typed properly
 }
 
 // Define the main document schema for Course
